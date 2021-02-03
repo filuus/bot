@@ -55,7 +55,7 @@ class PlayBitbay extends Command
      */
     public function handle()
     {
-        Log::info('Start command');
+
         $mlp = new MLPClassifier(30, [10], [-1, 0, 1]);
 
         for ($i = 0; $i < 100; $i++) {
@@ -69,10 +69,10 @@ class PlayBitbay extends Command
         }
 
         $signal = $mlp->predict([$this->getData()])[0];
+        Log::info('Predict signal: ' . $signal);
 
         $this->play($signal);
 
-        Log::info('End command');
         return 0;
     }
 

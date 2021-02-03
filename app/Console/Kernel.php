@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('play:bitbay')->everyFiveMinutes();
+         $schedule->command('play:bitbay')->everyFiveMinutes()->withoutOverlapping();
     }
 
     /**
