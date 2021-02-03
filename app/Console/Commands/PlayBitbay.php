@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Phpml\Classification\MLPClassifier;
 use Phpml\NeuralNetwork\ActivationFunction\PReLU;
 use Phpml\NeuralNetwork\ActivationFunction\Sigmoid;
@@ -54,6 +55,7 @@ class PlayBitbay extends Command
      */
     public function handle()
     {
+        Log::info('Start command');
         $mlp = new MLPClassifier(30, [10], [-1, 0, 1]);
 
         for ($i = 0; $i < 100; $i++) {
@@ -70,6 +72,7 @@ class PlayBitbay extends Command
 
         $this->play($signal);
 
+        Log::info('End command');
         return 0;
     }
 
