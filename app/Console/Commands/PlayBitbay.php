@@ -145,8 +145,6 @@ class PlayBitbay extends Command
         $last = end($data->items);
         $target = (($last[1]->h + $last[1]->l) / 2) - (($first[1]->h + $first[1]->l) / 2);
 
-        Log::info('Target is: ' . $target);
-
         if ($target > 30) {
             $target = 1;
         } else if ($target < -30) {
