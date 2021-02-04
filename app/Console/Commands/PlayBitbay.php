@@ -219,7 +219,7 @@ class PlayBitbay extends Command
         $balances = $this->getSaldo();
         $pln = $balances['27'];
         $eth = $balances['20'];
-        $price = (string)(0.9 * (float)$pln['available']);
+        $price = $pln['available'];
         $amount = (string)(0.9 * (float)$eth['available']);
         Log::info($price);
         Log::info($amount);
