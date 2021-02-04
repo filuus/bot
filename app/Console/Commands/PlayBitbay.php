@@ -219,6 +219,10 @@ class PlayBitbay extends Command
         $balances = $this->getSaldo();
         $pln = $balances['27'];
         $eth = $balances['20'];
+        $price = (string)(0.9 * (float)$pln['available']);
+        $amount = (string)(0.9 * (float)$eth['available']);
+        Log::info($price);
+        Log::info($amount);
         $haveFounds = $this->haveFounds();
         switch ($signal) {
             case 1:
@@ -226,7 +230,7 @@ class PlayBitbay extends Command
                     $params = array(
                         "offerType" => "BUY",
                         "amount" => null,
-                        "price" => (string)(0.9 * (float)$pln['available']),
+                        "price" => $price,
                         "rate" => null,
                         "postOnly" => false,
                         "mode" => "market",
@@ -242,7 +246,7 @@ class PlayBitbay extends Command
                 if (!$haveFounds) {
                     $params = array(
                         "offerType" => "SELL",
-                        "amount" => (string)(0.9 * (float)$eth['available']),
+                        "amount" => $amount,
                         "price" => null,
                         "rate" => null,
                         "postOnly" => false,
