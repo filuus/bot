@@ -230,7 +230,7 @@ class PlayBitbay extends Command
                     $params = array(
                         "offerType" => "BUY",
                         "amount" => null,
-                        "price" => $price,
+                        "price" => number_format(0.9 * $pln['available'], 2, '.', ''),
                         "rate" => null,
                         "postOnly" => false,
                         "mode" => "market",
@@ -246,7 +246,7 @@ class PlayBitbay extends Command
                 if (!$haveFounds) {
                     $params = array(
                         "offerType" => "SELL",
-                        "amount" => $amount,
+                        "amount" => number_format(0.9 * $eth['available'], 8, '.', ''),
                         "price" => null,
                         "rate" => null,
                         "postOnly" => false,
