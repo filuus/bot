@@ -214,15 +214,12 @@ class PlayBitbay extends Command
 
     public function play($signal)
     {
-        Log::info('Predict signal: ' . $signal);
         $this->info($signal);
         $balances = $this->getSaldo();
         $pln = $balances['27'];
         $eth = $balances['20'];
         $price = $pln['available'];
         $amount = (string)(0.9 * (float)$eth['available']);
-        Log::info($price);
-        Log::info($amount);
         $haveFounds = $this->haveFounds();
         switch ($signal) {
             case 1:
@@ -239,7 +236,6 @@ class PlayBitbay extends Command
                     $response = $this->callApi('trading/offer/ETH-PLN', $params, 'POST');
                     Log::info($response);
                 } else {
-                    Log::info('You haven\'t founds');
                 }
                 break;
             case -1:
@@ -257,11 +253,9 @@ class PlayBitbay extends Command
                     Log::info($response);
 
                 } else {
-                    Log::info('You haven\'t ETH');
                 }
                 break;
             case 0:
-                Log::info('You don\' have signal');
                 break;
         }
     }
