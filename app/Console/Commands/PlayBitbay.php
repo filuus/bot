@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Console\Command;
@@ -214,12 +215,9 @@ class PlayBitbay extends Command
 
     public function play($signal)
     {
-        $this->info($signal);
         $balances = $this->getSaldo();
         $pln = $balances['27'];
         $eth = $balances['20'];
-        $price = $pln['available'];
-        $amount = (string)(0.9 * (float)$eth['available']);
         $haveFounds = $this->haveFounds();
         switch ($signal) {
             case 1:
@@ -235,6 +233,7 @@ class PlayBitbay extends Command
                     );
                     $response = $this->callApi('trading/offer/ETH-PLN', $params, 'POST');
                     Log::info($response);
+                    $this->saveTransaction(Transaction::BUY, json_decode($response), $this->getSaldo());
                 } else {
                 }
                 break;
@@ -251,12 +250,26 @@ class PlayBitbay extends Command
                     );
                     $response = $this->callApi('trading/offer/ETH-PLN', $params, 'POST');
                     Log::info($response);
-
+                    $this->saveTransaction(Transaction::SELL, json_decode($response), $this->getSaldo());
                 } else {
                 }
                 break;
             case 0:
                 break;
         }
+    }
+
+    public function saveTransaction($type, $response, $balances)
+    {
+        $pln = $balances['27'];
+        $eth = $balances['20'];
+
+        $transaction = new Transaction();
+        $transaction->transaction_id = $response['offer_id'];
+        $transaction->type = $type;
+        $transaction->amount = $response['transactions'][0]['amount'];
+        $transaction->rate = $response['transactions'][0]['rate'];
+        $transaction->balance = $pln['value'] + $eth['value'];
+        $transaction->save();
     }
 }
