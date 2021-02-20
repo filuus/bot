@@ -29,7 +29,7 @@
                     <th>Type</th>
                     <th>Amount</th>
                     <th>Rate</th>
-                    <th>Balaance</th>
+                    <th>Balance</th>
                     <th>Updated at</th>
                     <th>Created at</th>
                 </tr>
@@ -38,13 +38,14 @@
                 <tr>
                 @foreach($transactions as $transaction)
                     <td>{{ $transaction->id }}</td>
+                    <td>{{ $transaction->transaction_id }}</td>
                     <td>{{ $transaction->type }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->rate }}</td>
                     <td>{{ $transaction->balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
-                    @endforeach
+                @endforeach
                 </tr>
             </tbody>
         </table>
