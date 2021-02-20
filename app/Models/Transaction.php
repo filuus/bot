@@ -31,14 +31,24 @@ class Transaction extends Model
         self::BUY => 'BUY'
     ];
 
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getTypeAttribute($value): string
+    {
+        return self::TRANSACTION_TYPES[$value];
+    }
+
+    /**
+     * @return float|int|string
+     */
     public function getProfitAttribute() {
         $lastId = Transaction::latest()->first()->id;
-        if ($this->id === 1) {
-            return 0;
-        } elseif ($this->id === $lastId) {
+        if ($this->id === $lastId) {
             return 0;
         }
-        $prevBalance = Transaction::find($this->id - 1)->balance;
-        return $prevBalance - $this->balance;
+        $nextBalance = Transaction::find($this->id + 1)->balance;
+        return $nextBalance - $this->balance;
     }
 }

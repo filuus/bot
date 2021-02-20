@@ -10,6 +10,10 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::orderBy('created_at', 'desc')->get();
-        return view('welcome', ['transactions' => $transactions]);
+        return view('welcome', [
+            'transactions' => $transactions,
+            'sell' => Transaction::TRANSACTION_TYPES[Transaction::SELL],
+            'buy' => Transaction::TRANSACTION_TYPES[Transaction::BUY]
+        ]);
     }
 }

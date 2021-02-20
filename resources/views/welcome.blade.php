@@ -41,10 +41,16 @@
                 <tr>
                     <td>{{ $transaction->id }}</td>
                     <td>{{ $transaction->transaction_id }}</td>
-                    <td>{{ $transaction->type }}</td>
+                    <td class="{{ $transaction->type === $sell ? 'red' : 'green' }}">{{ $transaction->type }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->rate }}</td>
-                    <td>{{ $transaction->profit }}</td>
+                    @if ($transaction->profit > 0)
+                        <td class="green">{{ $transaction->profit }}</td>
+                    @elseif ($transaction->profit === 0)
+                        <td>{{ $transaction->profit }}</td>
+                    @else
+                        <td class="red">{{ $transaction->profit }}</td>
+                    @endif
                     <td>{{ $transaction->balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
