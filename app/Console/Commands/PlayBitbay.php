@@ -283,12 +283,14 @@ class PlayBitbay extends Command
         $pln = $balances['27'];
         $eth = $balances['20'];
 
-        $transaction = new Transaction();
-        $transaction->transaction_id = $response->offerId;
-        $transaction->type = $type;
-        $transaction->amount = $response->transactions[0]['amount'];
-        $transaction->rate = $response->transactions[0]['rate'];
-        $transaction->balance = $pln['value'] + $eth['value'];
-        $transaction->save();
+        foreach ($response->transactions as $transactions) {
+            $transaction = new Transaction();
+            $transaction->transaction_id = $response->offerId;
+            $transaction->type = $type;
+            $transaction->amount = $transactions->amount;
+            $transaction->rate = $transactions->rate;
+            $transaction->balance = $pln['value'] + $eth['value'];
+            $transaction->save();
+        }
     }
 }
