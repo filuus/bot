@@ -11,8 +11,13 @@
     },
     "devDependencies": {
         "axios": "^0.21",
+        "cross-env": "^7.0.3",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "webpack-cli": "^4.5.0"
+    },
+    "dependencies": {
+        "webpack": "^5.23.0"
     }
 }
