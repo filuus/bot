@@ -30,4 +30,15 @@ class Transaction extends Model
         self::SELL => 'SELL',
         self::BUY => 'BUY'
     ];
+
+    public function getProfitAttribute() {
+        $lastId = Transaction::latest()->first()->id;
+        if ($this->id === 1) {
+            return 0;
+        } elseif ($this->id === $lastId) {
+            return 0;
+        }
+        $prevBalance = Transaction::find($this->id - 1)->balance;
+        return $prevBalance - $this->balance;
+    }
 }

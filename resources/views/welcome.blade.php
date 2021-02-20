@@ -30,6 +30,7 @@
                     <th>Type</th>
                     <th>Amount</th>
                     <th>Rate</th>
+                    <th>Profit</th>
                     <th>Balance</th>
                     <th>Updated at</th>
                     <th>Created at</th>
@@ -43,6 +44,7 @@
                     <td>{{ $transaction->type }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->rate }}</td>
+                    <td>{{ $transaction->profit }}</td>
                     <td>{{ $transaction->balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
