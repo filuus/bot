@@ -23,25 +23,29 @@
     <body class="antialiased">
         <table>
             <thead>
-                <th>#</th>
-                <th>Transaction ID</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Rate</th>
-                <th>Balaance</th>
-                <th>Updated at</th>
-                <th>Created at</th>
+                <tr>
+                    <th>#</th>
+                    <th>Transaction ID</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Balaance</th>
+                    <th>Updated at</th>
+                    <th>Created at</th>
+                </tr>
             </thead>
             <tbody>
+                <tr>
                 @foreach($transactions as $transaction)
-                    <tr>{{ $transaction->id }}</tr>
-                    <tr>{{ $transaction->type }}</tr>
-                    <tr>{{ $transaction->amount }}</tr>
-                    <tr>{{ $transaction->rate }}</tr>
-                    <tr>{{ $transaction->balance }}</tr>
-                    <tr>{{ $transaction->updated_at }}</tr>
-                    <tr>{{ $transaction->created_at }}</tr>
-                @endforeach
+                    <td>{{ $transaction->id }}</td>
+                    <td>{{ $transaction->type }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->rate }}</td>
+                    <td>{{ $transaction->balance }}</td>
+                    <td>{{ $transaction->updated_at }}</td>
+                    <td>{{ $transaction->created_at }}</td>
+                    @endforeach
+                </tr>
             </tbody>
         </table>
     </body>
