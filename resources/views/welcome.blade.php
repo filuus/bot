@@ -35,8 +35,8 @@
                 </tr>
             </thead>
             <tbody>
+            @foreach($transactions as $transaction)
                 <tr>
-                @foreach($transactions as $transaction)
                     <td>{{ $transaction->id }}</td>
                     <td>{{ $transaction->transaction_id }}</td>
                     <td>{{ $transaction->type }}</td>
@@ -45,8 +45,8 @@
                     <td>{{ $transaction->balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
-                @endforeach
                 </tr>
+            @endforeach
             </tbody>
         </table>
     </body>
