@@ -56,13 +56,14 @@ class PlayBitbay extends Command
     /**
      * @return int
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function handle(): int
     {
 
         $mlp = new MLPClassifier(30, [10], [-1, 0, 1]);
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 300; $i++) {
             $quantity = (string)($i * 5);
             $result = $this->getSamples(Carbon::now('Europe/Warsaw')->sub($quantity . 'minutes'));
             $mlp->partialTrain(
@@ -247,7 +248,6 @@ class PlayBitbay extends Command
                         "fillOrKill" => false
                     );
                     $response = $this->callApi('trading/offer/ETH-PLN', $params, 'POST');
-                    Log::info($response);
                     $this->saveTransaction(Transaction::BUY, json_decode($response), $this->getSaldo());
                 } else {
                 }
@@ -264,7 +264,6 @@ class PlayBitbay extends Command
                         "fillOrKill" => false
                     );
                     $response = $this->callApi('trading/offer/ETH-PLN', $params, 'POST');
-                    Log::info($response);
                     $this->saveTransaction(Transaction::SELL, json_decode($response), $this->getSaldo());
                 } else {
                 }
