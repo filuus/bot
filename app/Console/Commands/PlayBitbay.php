@@ -5,10 +5,13 @@ namespace App\Console\Commands;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Phpml\Classification\MLPClassifier;
+use Phpml\Exception\InvalidArgumentException;
 use Phpml\NeuralNetwork\ActivationFunction\PReLU;
 use Phpml\NeuralNetwork\ActivationFunction\Sigmoid;
 use Phpml\NeuralNetwork\Layer;
@@ -30,11 +33,11 @@ class PlayBitbay extends Command
      */
     protected $description = 'Command description';
     /**
-     * @var \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @var Repository|Application|mixed
      */
     private $pubKey;
     /**
-     * @var \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
+     * @var Repository|Application|mixed
      */
     private $privKey;
 
@@ -52,9 +55,9 @@ class PlayBitbay extends Command
 
     /**
      * @return int
-     * @throws \Phpml\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function handle()
+    public function handle(): int
     {
 
         $mlp = new MLPClassifier(30, [10], [-1, 0, 1]);
@@ -178,7 +181,11 @@ class PlayBitbay extends Command
         }, $thirtyElements);
     }
 
-    public function getSaldo()
+    /**
+     * @return array|array[]
+     * @throws Exception
+     */
+    public function getSaldo(): array
     {
         $balances = $this->callApi('balances/BITBAY/balance');
         $ticker = $this->callApi('trading/ticker/ETH-PLN');
@@ -200,7 +207,11 @@ class PlayBitbay extends Command
         }, $myCurrency);
     }
 
-    public function haveFounds()
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function haveFounds(): bool
     {
         $balances = $this->getSaldo();
         $plnValue = $balances['27']['value'];
@@ -213,6 +224,10 @@ class PlayBitbay extends Command
         }
     }
 
+    /**
+     * @param $signal
+     * @throws Exception
+     */
     public function play($signal)
     {
         $balances = $this->getSaldo();
@@ -259,6 +274,11 @@ class PlayBitbay extends Command
         }
     }
 
+    /**
+     * @param $type
+     * @param $response
+     * @param $balances
+     */
     public function saveTransaction($type, $response, $balances)
     {
         $pln = $balances['27'];
