@@ -57,7 +57,7 @@ class Transaction extends Model
 
     public function getFormattedRateAttribute(): string
     {
-        return self::eth($this->rate);
+        return self::pln($this->rate);
     }
 
     public function getFormattedBalanceAttribute(): string
@@ -71,9 +71,9 @@ class Transaction extends Model
     public function getProfitAttribute() {
         $lastId = Transaction::latest()->first()->id;
         if ($this->id === $lastId) {
-            return self::pln(0);
+            return 0;
         }
         $nextBalance = Transaction::find($this->id + 1)->balance;
-        return self::pln($nextBalance - $this->balance);
+        return $nextBalance - $this->balance;
     }
 }
