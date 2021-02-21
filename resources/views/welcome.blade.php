@@ -45,11 +45,11 @@
                     <td>{{ $transaction->formatted_amount }}</td>
                     <td>{{ $transaction->formatted_rate }}</td>
                     @if ($transaction->profit > 0)
-                        <td class="green">{{ $transaction->profit }} PLN</td>
+                        <td class="green">{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
                     @elseif ($transaction->profit === 0)
-                        <td>{{ $transaction->profit }} PLN</td>
+                        <td>{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
                     @else
-                        <td class="red">{{ $transaction->profit }} PLN</td>
+                        <td class="red">{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
                     @endif
                     <td>{{ $transaction->formatted_balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
