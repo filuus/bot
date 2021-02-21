@@ -52,12 +52,12 @@ class Transaction extends Model
 
     public function getFormattedAmountAttribute(): string
     {
-        return self::eth($this->balance);
+        return self::eth($this->amount);
     }
 
     public function getFormattedRateAttribute(): string
     {
-        return self::eth($this->balance);
+        return self::eth($this->rate);
     }
 
     public function getFormattedBalanceAttribute(): string
