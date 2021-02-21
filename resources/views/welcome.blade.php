@@ -42,8 +42,8 @@
                     <td>{{ $transaction->id }}</td>
                     <td>{{ $transaction->transaction_id }}</td>
                     <td class="{{ $transaction->type === $sell ? 'red' : 'green' }}">{{ $transaction->type }}</td>
-                    <td>{{ $transaction->amount }}</td>
-                    <td>{{ $transaction->rate }}</td>
+                    <td>{{ $transaction->formatted_amount }}</td>
+                    <td>{{ $transaction->formatted_rate }}</td>
                     @if ($transaction->profit > 0)
                         <td class="green">{{ $transaction->profit }}</td>
                     @elseif ($transaction->profit === 0)

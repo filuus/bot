@@ -61,9 +61,9 @@ class PlayBitbay extends Command
     public function handle(): int
     {
 
-        $mlp = new MLPClassifier(30, [10], [-1, 0, 1]);
+        $mlp = new MLPClassifier(60, [30], [-1, 0, 1]);
 
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < 400; $i++) {
             $quantity = (string)($i * 5);
             $result = $this->getSamples(Carbon::now('Europe/Warsaw')->sub($quantity . 'minutes'));
             $mlp->partialTrain(
@@ -137,11 +137,11 @@ class PlayBitbay extends Command
     public function getSamples(Carbon $date): array
     {
         $before = clone $date;
-        $before = $before->sub('5 hour');
+        $before = $before->sub('10 hour');
         $response = $this->callApi('trading/candle/history/ETH-PLN/300?from=' . $before->timestamp . '000' . '&to=' . $date->timestamp . '000');
 
         $data = json_decode($response);
-        $thirtyElements = array_slice($data->items, 0, 30);
+        $thirtyElements = array_slice($data->items, 0, 60);
         $rateSamples = array_map(function ($el) {
             return $el[1]->c - $el[1]->o;
         }, $thirtyElements);
@@ -150,9 +150,9 @@ class PlayBitbay extends Command
         $last = end($data->items);
         $target = (($last[1]->h + $last[1]->l) / 2) - (($first[1]->h + $first[1]->l) / 2);
 
-        if ($target > 30) {
+        if ($target > 100) {
             $target = 1;
-        } else if ($target < -30) {
+        } else if ($target < -100) {
             $target = -1;
         } else {
             $target = 0;

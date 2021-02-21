@@ -31,6 +31,16 @@ class Transaction extends Model
         self::BUY => 'BUY'
     ];
 
+    public static function pln($value): string
+    {
+        return number_format($value, 2, ',', ' ') . ' ' . 'PLN';
+    }
+
+    public static function eth($value): string
+    {
+        return number_format($value, 8, ',', ' ') . ' ' . 'ETH';
+    }
+
     /**
      * @param $value
      * @return string
@@ -40,9 +50,19 @@ class Transaction extends Model
         return self::TRANSACTION_TYPES[$value];
     }
 
+    public function getFormattedAmountAttribute(): string
+    {
+        return self::eth($this->balance);
+    }
+
+    public function getFormattedRateAttribute(): string
+    {
+        return self::eth($this->balance);
+    }
+
     public function getFormattedBalanceAttribute(): string
     {
-        return number_format($this->balance, 2, ',', ' ') . ' ' . 'PLN';
+        return self::pln($this->balance);
     }
 
     /**
@@ -51,9 +71,9 @@ class Transaction extends Model
     public function getProfitAttribute() {
         $lastId = Transaction::latest()->first()->id;
         if ($this->id === $lastId) {
-            return 0;
+            return self::pln(0);
         }
         $nextBalance = Transaction::find($this->id + 1)->balance;
-        return $nextBalance - $this->balance;
+        return self::pln($nextBalance - $this->balance);
     }
 }
