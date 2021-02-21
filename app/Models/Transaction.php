@@ -40,9 +40,9 @@ class Transaction extends Model
         return self::TRANSACTION_TYPES[$value];
     }
 
-    public function getBalanceAttribute($value): string
+    public function getFormattedBalanceAttribute(): string
     {
-        return number_format($value, 2, ',', ' ') . ' ' . 'PLN';
+        return number_format($this->balance, 2, ',', ' ') . ' ' . 'PLN';
     }
 
     /**

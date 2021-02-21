@@ -51,7 +51,7 @@
                     @else
                         <td class="red">{{ $transaction->profit }}</td>
                     @endif
-                    <td>{{ $transaction->balance }}</td>
+                    <td>{{ $transaction->formatted_balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
                 </tr>
