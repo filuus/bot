@@ -73,7 +73,7 @@ class PlayBitbay extends Command
             $this->info($i);
         }
 
-        Log::info(json_encode($mlp->predict([$this->getData()]));
+        Log::info(json_encode($mlp->predict([$this->getData()])));
         $signal = $mlp->predict([$this->getData()])[0];
 
         $this->play($signal);
