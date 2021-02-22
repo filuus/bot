@@ -63,7 +63,7 @@ class PlayBitbay extends Command
 
         $mlp = new MLPClassifier(60, [30], [-1, 0, 1]);
 
-        for ($i = 0; $i < 400; $i++) {
+        for ($i = 0; $i < 300; $i++) {
             $quantity = (string)($i * 5);
             $result = $this->getSamples(Carbon::now('Europe/Warsaw')->sub($quantity . 'minutes'));
             $mlp->partialTrain(
