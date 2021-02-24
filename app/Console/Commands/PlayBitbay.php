@@ -73,6 +73,7 @@ class PlayBitbay extends Command
             $this->info($i);
         }
 
+        Log::info(json_encode($mlp->predict([$this->getData()])));
         $signal = $mlp->predict([$this->getData()])[0];
 
         $this->play($signal);
@@ -171,11 +172,11 @@ class PlayBitbay extends Command
     public function getData(): array
     {
         $now = Carbon::now();
-        $before = Carbon::now()->sub('5 hour');
+        $before = Carbon::now()->sub('10 hour');
         $response = $this->callApi('trading/candle/history/ETH-PLN/300?from=' . $before->timestamp . '000' . '&to=' . $now->timestamp . '000');
 
         $data = json_decode($response);
-        $thirtyElements = array_slice($data->items, -30);
+        $thirtyElements = array_slice($data->items, -60);
 
         return array_map(function ($el) {
             return $el[1]->c - $el[1]->o;
