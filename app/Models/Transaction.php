@@ -70,10 +70,10 @@ class Transaction extends Model
      */
     public function getProfitAttribute() {
         $lastId = Transaction::latest()->first()->id;
-        if ($this->id === $lastId) {
+        if ($this->type === self::SELL) {
             return 0;
         }
-        $nextBalance = Transaction::find($this->id + 1)->balance;
-        return $nextBalance - $this->balance;
+        $prevBalance = Transaction::find($this->id - 1)->balance;
+        return $this->balance - $prevBalance;
     }
 }

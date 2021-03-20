@@ -16,6 +16,7 @@ use Phpml\NeuralNetwork\ActivationFunction\PReLU;
 use Phpml\NeuralNetwork\ActivationFunction\Sigmoid;
 use Phpml\NeuralNetwork\Layer;
 use Phpml\NeuralNetwork\Node\Neuron;
+use App\Services\Network
 
 class PlayBitbay extends Command
 {
@@ -54,27 +55,22 @@ class PlayBitbay extends Command
     }
 
     /**
+     * @param Network
      * @return int
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function handle(): int
+    public function handle(Network $network): int
     {
+        $result = $this->getSamples(Carbon::now('Europe/Warsaw'));
+        $network->mlp->partialTrain(
+            $samples = [$result['samples']],
+            $targets = [$result['target']]
+        );
+        $this->info($i);
 
-        $mlp = new MLPClassifier(60, [30], [-1, 0, 1]);
-
-        for ($i = 0; $i < 100; $i++) {
-            $quantity = (string)($i * 60);
-            $result = $this->getSamples(Carbon::now('Europe/Warsaw')->sub($quantity . 'minutes'));
-            $mlp->partialTrain(
-                $samples = [$result['samples']],
-                $targets = [$result['target']]
-            );
-            $this->info($i);
-        }
-
-        Log::info(json_encode($mlp->predict([$this->getData()])));
-        $signal = $mlp->predict([$this->getData()])[0];
+        Log::info(json_encode($network->mlp->predict([$this->getData()])));
+        $signal = $network->mlp->predict([$this->getData()])[0];
 
         $this->play($signal);
 
