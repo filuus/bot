@@ -76,6 +76,6 @@ class Transaction extends Model
         // $prevBalance = Transaction::find($this->id - 1)->balance;
         // return $this->balance - $prevBalance;
 
-        return 10;
+        return $this->type;
     }
 }
