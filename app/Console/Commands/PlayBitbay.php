@@ -132,8 +132,9 @@ class PlayBitbay extends Command
      * @return array
      * @throws Exception
      */
-    public function getSamples(Carbon $date): array
+    public function getSamples(Carbon $date, Network $network): array
     {
+        $network->increment();
         $before = clone $date;
         $before = $before->sub('10 hour');
         $response = $this->callApi('trading/candle/history/ETH-PLN/300?from=' . $before->timestamp . '000' . '&to=' . $date->timestamp . '000');
