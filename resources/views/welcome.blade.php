@@ -44,14 +44,13 @@
                     <td class="{{ $transaction->type === $sell ? 'red' : 'green' }}">{{ $transaction->type }}</td>
                     <td>{{ $transaction->formatted_amount }}</td>
                     <td>{{ $transaction->formatted_rate }}</td>
-                    <td>{{ $transaction->profit }}</td>
-                    <!-- @if ($transaction->profit > 0)
+                    @if ($transaction->profit > 0)
                         <td class="green">{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
                     @elseif ($transaction->profit === 0)
                         <td>{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
                     @else
                         <td class="red">{{ number_format($transaction->profit, 2, ',', ' ') }} PLN</td>
-                    @endif -->
+                    @endif
                     <td>{{ $transaction->formatted_balance }}</td>
                     <td>{{ $transaction->updated_at }}</td>
                     <td>{{ $transaction->created_at }}</td>
