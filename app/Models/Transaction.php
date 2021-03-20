@@ -69,11 +69,13 @@ class Transaction extends Model
      * @return float|int|string
      */
     public function getProfitAttribute() {
-        $lastId = Transaction::latest()->first()->id;
-        if ($this->type === 1 || $this->id === 1) {
-            return 0;
-        }
-        $prevBalance = Transaction::find($this->id - 1)->balance;
-        return $this->balance - $prevBalance;
+        // $lastId = Transaction::latest()->first()->id;
+        // if ($this->type === 1 || $this->id === 1) {
+        //     return 0;
+        // }
+        // $prevBalance = Transaction::find($this->id - 1)->balance;
+        // return $this->balance - $prevBalance;
+
+        return 10;
     }
 }
