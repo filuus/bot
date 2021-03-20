@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('App\Services\Network', function() {
             return new Network();
-        })
+        });
     }
 
     /**
