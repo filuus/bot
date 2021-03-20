@@ -67,7 +67,6 @@ class PlayBitbay extends Command
             $samples = [$result['samples']],
             $targets = [$result['target']]
         );
-        $this->info($i);
 
         Log::info(json_encode($network->mlp->predict([$this->getData()])));
         $signal = $network->mlp->predict([$this->getData()])[0];
