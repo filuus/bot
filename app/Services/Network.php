@@ -11,7 +11,7 @@ use Phpml\NeuralNetwork\Node\Neuron;
 
 class Network
 {
-    protected $mlp;
+    public $mlp;
 
     public function __construct()
     {
