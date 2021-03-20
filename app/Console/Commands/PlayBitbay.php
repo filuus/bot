@@ -16,7 +16,7 @@ use Phpml\NeuralNetwork\ActivationFunction\PReLU;
 use Phpml\NeuralNetwork\ActivationFunction\Sigmoid;
 use Phpml\NeuralNetwork\Layer;
 use Phpml\NeuralNetwork\Node\Neuron;
-use App\Services\Network
+use App\Services\Network;
 
 class PlayBitbay extends Command
 {
