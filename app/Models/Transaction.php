@@ -70,10 +70,10 @@ class Transaction extends Model
      */
     public function getProfitAttribute() {
         $lastId = Transaction::latest()->first()->id;
+        $prevBalance = Transaction::find($this->id - 1);
         if ($this->type === self::TRANSACTION_TYPES[self::BUY] || $this->id === 1) {
             return 0;
         } else {
-            $prevBalance = Transaction::find($this->id - 1);
             while($prevBalance->type === self::TRANSACTION_TYPES[self::BUY]) {
                 $prevBalance = Transaction::find($prevBalance->id - 1);
             }
