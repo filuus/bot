@@ -75,7 +75,7 @@ class Transaction extends Model
             return 0;
         } else {
             while($prevTransaction->type === self::TRANSACTION_TYPES[self::BUY]) {
-                $prevTransaction = Transaction::find($prevBalance->id - 1);
+                $prevTransaction = Transaction::find($prevTransaction->id - 1);
             }
         }
         return $this->balance - $prevTransaction->balance;
