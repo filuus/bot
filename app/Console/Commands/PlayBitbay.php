@@ -63,11 +63,11 @@ class PlayBitbay extends Command
     public function handle(Network $network): int
     {
         $result = $this->getSamples(Carbon::now('Europe/Warsaw'));
-        $network->mlp->partialTrain(
+        app('network')->mlp->partialTrain(
             $samples = [$result['samples']],
             $targets = [$result['target']]
         );
-        $network->increment();
+        app('network')->increment();
 
         Log::info($network->counter);
         Log::info(json_encode($network->mlp->predict([$this->getData()])));
@@ -132,9 +132,8 @@ class PlayBitbay extends Command
      * @return array
      * @throws Exception
      */
-    public function getSamples(Carbon $date, Network $network): array
+    public function getSamples(Carbon $date): array
     {
-        $network->increment();
         $before = clone $date;
         $before = $before->sub('10 hour');
         $response = $this->callApi('trading/candle/history/ETH-PLN/300?from=' . $before->timestamp . '000' . '&to=' . $date->timestamp . '000');
