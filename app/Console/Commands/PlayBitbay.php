@@ -63,15 +63,15 @@ class PlayBitbay extends Command
     public function handle(Network $network): int
     {
         $result = $this->getSamples(Carbon::now('Europe/Warsaw'));
-        app('network')->mlp->partialTrain(
+        $network->mlp->partialTrain(
             $samples = [$result['samples']],
             $targets = [$result['target']]
         );
-        app('network')->increment();
+        $network->increment();
 
-        Log::info(app('network')->counter);
-        Log::info(json_encode(app('network')->mlp->predict([$this->getData()])));
-        $signal = app('network')->mlp->predict([$this->getData()])[0];
+        Log::info($network->counter);
+        Log::info(json_encode($network->mlp->predict([$this->getData()])));
+        $signal = $network->mlp->predict([$this->getData()])[0];
 
         $this->play($signal);
 

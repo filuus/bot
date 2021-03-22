@@ -14,9 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->instance('network', function() {
-            return new Network();
-        });
+        $network = new Network();
+        $this->app->instance(Network::class, $network);
     }
 
     /**
