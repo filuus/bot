@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('network', function() {
+        $this->app->instance('network', function() {
             return new Network();
         });
     }
