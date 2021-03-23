@@ -65,7 +65,7 @@ class PlayBitbay extends Command
     {
         $result = $this->getSamples(Carbon::now('Europe/Warsaw'));
 
-        $neuronNetwork = NetworkState::latest()->first() ? unserialize(NetworkState::latest()->first()->network) : $network
+        $neuronNetwork = NetworkState::latest()->first() ? unserialize(NetworkState::latest()->first()->network) : $network;
 
         $neuronNetwork->mlp->partialTrain(
             $samples = [$result['samples']],
