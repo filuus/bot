@@ -15,7 +15,7 @@ class CreateNetworkStatesTable extends Migration
     {
         Schema::create('network_states', function (Blueprint $table) {
             $table->id();
-            $table->string('network')
+            $table->string('network');
             $table->timestamps();
         });
     }
