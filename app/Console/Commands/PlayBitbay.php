@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Transaction;
+use App\Models\NetworkState;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Config\Repository;
@@ -63,15 +64,22 @@ class PlayBitbay extends Command
     public function handle(Network $network): int
     {
         $result = $this->getSamples(Carbon::now('Europe/Warsaw'));
-        $network->mlp->partialTrain(
+
+        $neuronNetwork = NetworkState::latest()->first() ? unserialize(NetworkState::latest()->first()->network) : $network
+
+        $neuronNetwork->mlp->partialTrain(
             $samples = [$result['samples']],
             $targets = [$result['target']]
         );
-        $network->increment();
+        $neuronNetwork->increment();
 
-        Log::info($network->counter);
-        Log::info(json_encode($network->mlp->predict([$this->getData()])));
-        $signal = $network->mlp->predict([$this->getData()])[0];
+        Log::info($neuronNetwork->counter);
+        Log::info(json_encode($neuronNetwork->mlp->predict([$this->getData()])));
+        $signal = $neuronNetwork->mlp->predict([$this->getData()])[0];
+
+        $newState = new NetworkState();
+        $newState->network = serialize($neuronNetwork);
+        $newState->save();
 
         $this->play($signal);
 
