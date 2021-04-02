@@ -221,8 +221,8 @@ class PlayBitbay extends Command
     public function haveFounds(): bool
     {
         $balances = $this->getSaldo();
-        $plnValue = $balances['27']['value'];
-        $ethValue = $balances['20']['value'];
+        $plnValue = $balances['33']['value'];
+        $ethValue = $balances['25']['value'];
 
         if ($ethValue <= $plnValue) {
             return true;
@@ -239,8 +239,8 @@ class PlayBitbay extends Command
     {
         $balances = $this->getSaldo();
         Log::info(json_encode($balances));
-        $pln = $balances['27'];
-        $eth = $balances['20'];
+        $pln = $balances['33'];
+        $eth = $balances['25'];
         $haveFounds = $this->haveFounds();
         switch ($signal) {
             case 1:
@@ -287,8 +287,8 @@ class PlayBitbay extends Command
      */
     public function saveTransaction($type, $response, $balances)
     {
-        $pln = $balances['27'];
-        $eth = $balances['20'];
+        $pln = $balances['33'];
+        $eth = $balances['25'];
 
         foreach ($response->transactions as $transactions) {
             $transaction = new Transaction();
