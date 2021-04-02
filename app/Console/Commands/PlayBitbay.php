@@ -238,6 +238,7 @@ class PlayBitbay extends Command
     public function play($signal)
     {
         $balances = $this->getSaldo();
+        $this->info(json_encode($balances));
         $pln = $balances['27'];
         $eth = $balances['20'];
         $haveFounds = $this->haveFounds();
